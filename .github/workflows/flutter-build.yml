@@ -3,8 +3,6 @@ name: Flutter Build APK
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -12,19 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-    - name: Setup Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
-
-    - name: Setup Flutter
+    - name: Setup Flutter (with specific version)
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.16.0'
+        # Use a version that matches your project
+        flutter-version: '3.19.0'  # Try this first
+        cache: true
+
+    - name: Accept Android Licenses
+      run: yes | flutter doctor --android-licenses
 
     - name: Install dependencies
       run: flutter pub get
@@ -37,3 +33,4 @@ jobs:
       with:
         name: app-release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
+        retention-days: 5
