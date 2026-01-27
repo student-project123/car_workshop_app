@@ -12,15 +12,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup Flutter (with specific version)
+    - name: Setup Flutter (matching your local version)
       uses: subosito/flutter-action@v2
       with:
-        # Use a version that matches your project
-        flutter-version: '3.19.0'  # Try this first
+        flutter-version: '3.38.5'  # EXACTLY your version
+        channel: 'stable'
         cache: true
 
-    - name: Accept Android Licenses
-      run: yes | flutter doctor --android-licenses
+    - name: Verify Flutter version
+      run: flutter --version
 
     - name: Install dependencies
       run: flutter pub get
